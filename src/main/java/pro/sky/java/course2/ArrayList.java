@@ -82,6 +82,7 @@ public class ArrayList implements StringList {
     // Установить элемент на определенную позицию, затерев существующий.
     // Выбросить исключение, если индекс больше фактического количества элементов или выходит за пределы массива.
     @Override
+
     public String set(int index, String item) {
         validateIndex(index);
         validateValue(item);

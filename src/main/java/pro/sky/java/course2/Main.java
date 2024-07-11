@@ -7,7 +7,6 @@ public class Main {
     public static void main(String[] args) {
         ArrayList arrayList = new ArrayList();
 //        arrayList.setArray(new String[]{"zero"});
-
         System.out.println(arrayList.add("one")+" size= "+arrayList.size() );
         System.out.println(arrayList.add("two")+" size= "+arrayList.size() );
         System.out.println(arrayList.add("three")+" size= "+arrayList.size() );
