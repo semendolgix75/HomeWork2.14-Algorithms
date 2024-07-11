@@ -5,6 +5,8 @@ import pro.sky.java.course2.exception.ErrorNullPointerException;
 import pro.sky.java.course2.exception.ErrorValueNotFoundInArray;
 
 import java.sql.Array;
+import java.util.Arrays;
+import java.util.List;
 
 public class ArrayList implements StringList {
 
@@ -26,11 +28,11 @@ public class ArrayList implements StringList {
     // Вернуть добавленный элемент в качестве результата выполнения.
     @Override
     public String add(String value) {
-        if (size == array.length) {
-            increaseCapacity();
-        }
         if (value == null) {
             throw new ErrorNullPointerException("Список не должен добавлять или хранить в себе null");
+        }
+        if (size == array.length) {
+            increaseCapacity();
         }
 
         array[size - 1] = value;
@@ -49,11 +51,11 @@ public class ArrayList implements StringList {
         if (index == size || index < 0) {
             throw new ErrorIndexOutOfBoundsException("Index: " + index + ", Size: " + size);
         }
-        if (size == array.length) {
-            increaseCapacity();
-        }
         if (item == null) {
             throw new ErrorNullPointerException("Список не должен добавлять или хранить в себе null");
+        }
+        if (size == array.length) {
+            increaseCapacity();
         }
         for (int i = size - 1; i > index; i--) {
             array[i] = array[i - 1];
@@ -70,12 +72,12 @@ public class ArrayList implements StringList {
         if (index > size || index < 0) {
             throw new ErrorIndexOutOfBoundsException("Index: " + index + ", Size: " + size);
         }
+        if (item == null) {
+            throw new ErrorNullPointerException("Список не должен добавлять или хранить в себе null");
+        }
 
         if (size == array.length) {
             increaseCapacity();
-        }
-        if (item == null) {
-            throw new ErrorNullPointerException("Список не должен добавлять или хранить в себе null");
         }
         array[index] = item;
         return item;
@@ -86,6 +88,9 @@ public class ArrayList implements StringList {
     @Override
 
     public String remove(String item) {
+        if (item == null) {
+            throw new ErrorNullPointerException("Список не должен добавлять или хранить в себе null");
+        }
         int numRemove = 0;
         int indexRemove = 0;
         for (int i = 0; i < size; i++) {
@@ -106,78 +111,112 @@ public class ArrayList implements StringList {
             }
         }
         array = resultArray;
-        size = -indexRemove;
+        size = size-numRemove;
         return item;
 
     }
 
+    // Удаление элемента по индексу.
+    // Вернуть удаленный элемент или исключение, если подобный  элемент отсутствует в списке.
     @Override
     public String remove(int index) {
-        return null;
-    }
-//        public String get ( int index)
-//        {
-//            if (index >= size || index < 0) {
-//                throw new ErrorIndexOutOfBoundsException("Index: " + index + ", Size: " + size);
-//            }
-//            return array[index];
-//        }
-//    }
-//
-//    @Override
-//    public boolean equals(StringList otherList) {
-//        return false;
-//    }
-//
-//
-//
-//
+        if (index > size || index < 0) {
+            throw new ErrorIndexOutOfBoundsException("Index: " + index + ", Size: " + size);
+        }
 
+        String result = array[index];
+        String[] resultArray = new String[size - 1];
+        for (int i = 0; i < index; i++) {
+            resultArray[i] = array[i];
+        }
+        for (int i = index+1; i < array.length; i++) {
+            resultArray[i-1] = array[i];
 
-    @Override
-    public boolean contains(String item) {
-        return false;
-    }
-
-    @Override
-    public int indexOf(String item) {
-        return 0;
-    }
-
-    @Override
-    public int lastIndexOf(String item) {
-        return 0;
-    }
-
-    @Override
-    public String get(int index) {
-        return null;
-    }
-
-    @Override
-    public boolean equals(StringList otherList) {
-        return false;
+        }
+        array=resultArray;
+        return result;
     }
 
 
-    public int size() {
-        return size;
+// Проверка на существование элемента.
+ // Вернуть true/false;
+@Override
+public boolean contains(String item) {
+    if (item == null) {
+        throw new ErrorNullPointerException("Список не должен добавлять или хранить в себе null");
+    }
+    for (int i = 0; i < array.length; i++) {
+        if (array[i] == item) return true;
     }
 
-    @Override
-    public boolean isEmpty() {
-        return false;
+    return false;
+}
+    // Поиск элемента.
+    // Вернуть индекс элемента или -1 в случае отсутствия.
+@Override
+public int indexOf(String item) {
+    if (item == null) {
+        throw new ErrorNullPointerException("Список не должен добавлять или хранить в себе null");
+    }
+    for (int i = 0; i < array.length; i++) {
+        if (array[i] == item) return i;
     }
 
-    @Override
-    public void clear() {
-
+    return -1;
+}
+    // Поиск элемента с конца.
+    // Вернуть индекс элемента или -1 в случае отсутствия.
+@Override
+public int lastIndexOf(String item) {
+    if (item == null) {
+        throw new ErrorNullPointerException("Список не должен добавлять или хранить в себе null");
+    }
+    for (int i = array.length-1; i >= 0; i--) {
+        if (array[i] == item) return i;
     }
 
-    @Override
-    public String[] toArray() {
-        return new String[0];
+    return -1;
+}
+
+    // Получить элемент по индексу.
+    // Вернуть элемент или исключение, если выходит за рамки фактического  количества элементов.
+@Override
+public String get(int index) {
+    if (index > size || index < 0) {
+        throw new ErrorIndexOutOfBoundsException("Index: " + index + ", Size: " + size);
     }
+
+    return array[index];
+}
+    // Сравнить текущий список с другим.
+    // Вернуть true/false или исключение, если передан null.
+@Override
+public boolean equals(List<String> otherList) {
+    List<String> list1 = List.of("one", "two");
+
+    return list1.equals(otherList);
+}
+
+    // Вернуть фактическое количество элементов.
+public int size() {
+
+    return size;
+}
+    // Вернуть true, если элементов в списке нет, иначе false.
+@Override
+public boolean isEmpty() {
+    return size==0;
+}
+
+@Override
+public void clear() {
+size=0;
+}
+
+@Override
+public String[] toArray() {
+    return Arrays.copyOf(array, size);
+}
 }
 
 

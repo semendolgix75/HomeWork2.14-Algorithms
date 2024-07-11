@@ -1,5 +1,7 @@
 package pro.sky.java.course2;
 
+import java.util.List;
+
 public interface StringList {
 
         // Добавление элемента.
@@ -59,7 +61,7 @@ public interface StringList {
         // Сравнить текущий список с другим.
         // Вернуть true/false или исключение,
         // если передан null.
-        boolean equals(StringList otherList);
+        boolean equals(List<String> otherList);
 
         // Вернуть фактическое количество элементов.
         int size();
