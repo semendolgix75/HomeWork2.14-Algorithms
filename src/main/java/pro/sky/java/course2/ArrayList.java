@@ -10,9 +10,15 @@ import java.util.List;
 
 public class ArrayList implements StringList {
 
-    private String[] array = new String[1];
+    private String[] array;
     private int size = 1;
 
+    public ArrayList(String[] array) {
+    this.array=array;
+    }
+    public ArrayList() {
+        array=new String[1];;
+    }
     public void setArray(String[] array) {
         this.array = array;
     }
@@ -24,14 +30,17 @@ public class ArrayList implements StringList {
         size++;
     }
 
+    public void validateValue(String value) {
+        if (value == null) {
+            throw new ErrorNullPointerException("Список не должен добавлять или хранить в себе null");
+        }
+    }
     // Добавление элемента.
     // Вернуть добавленный элемент в качестве результата выполнения.
     @Override
     public String add(String value) {
-        if (value == null) {
-            throw new ErrorNullPointerException("Список не должен добавлять или хранить в себе null");
-        }
-        if (size == array.length) {
+        validateValue(value);
+        if (size == array.length && array [size-1]!=null) {
             increaseCapacity();
         }
 
@@ -96,12 +105,12 @@ public class ArrayList implements StringList {
         for (int i = 0; i < size; i++) {
             if (array[i].equals(item)) {
                 numRemove++;
-                indexRemove = i
+      //         indexRemove = i;
                 ;
             }
         }
         String[] resultArray = new String[size - numRemove];
-        if (indexRemove == 0) {
+        if (numRemove == 0) {
             throw new ErrorValueNotFoundInArray("Нет такого элемента");
         }
         int newIndex = 0;
