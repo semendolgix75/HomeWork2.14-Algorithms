@@ -6,14 +6,16 @@ import java.util.List;
 public class Main {
     public static void main(String[] args) {
         ArrayList arrayList = new ArrayList();
+        StringListImpl stringList=new StringListImpl();
+
 //        arrayList.setArray(new String[]{"zero"});
-        System.out.println(arrayList.add("one")+" size= "+arrayList.size() );
+        System.out.println(stringList.add("one")+" size= "+arrayList.size() );
         System.out.println(arrayList.add("two")+" size= "+arrayList.size() );
         System.out.println(arrayList.add("three")+" size= "+arrayList.size() );
         System.out.println(arrayList.add("four")+" size= "+arrayList.size() );
         System.out.println(arrayList.add(1,"four"));
         System.out.println(arrayList.add(1,"two"));
-        System.out.println("arrayList.remove(item) = " + arrayList.remove("one"));
+        System.out.println("arrayList.remove(item) = " + stringList.remove("one"));
         System.out.println("arrayList.remove(index) = " + arrayList.remove(3));
         System.out.println("arrayList.contains(item) = " + arrayList.contains("three"));
         System.out.println("arrayList.indexOf() = " + arrayList.indexOf("three"));
