@@ -1,88 +1,85 @@
 package pro.sky.java.course2;
 
-import pro.sky.java.course2.exception.ErrorNullPointerException;
-
 import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
 
-public class StringListImpl implements StringList {
-
-    private final String[] storage;
+public class IntegerListImpl implements IntegerList {
+    private Integer[] storage;
     private int size;
 
-    public StringListImpl() {
-        storage = new String[10];
-
+    public IntegerListImpl() {
+        storage = new Integer[10];
     }
 
-    public StringListImpl(int initSize) {
-        storage = new String[initSize];
+    public IntegerListImpl(int size) {
+        storage = new Integer[size];
     }
 
     @Override
-    public String add(String item) {
-        validateSize();
-        validateItem(item);
-        storage[size++]=item;
+    public Integer add(Integer item) {
+        validateSizeInteger();
+        validateItemInteger(item);
+        storage[size++] = item;
         return item;
     }
 
     @Override
-    public String add(int index, String item) {
-        validateSize();
-        validateItem(item);
+    public Integer add(int index, Integer item) {
+        validateSizeInteger();
+        validateItemInteger(item);
         validateIndex(index);
         if (index == size) {
             storage[size++] = item;
             return item;
         }
         System.arraycopy(storage, index, storage, index + 1, size - index);
-        storage[index]=item;
+        storage[index] = item;
         size++;
         return item;
+
     }
 
     @Override
-    public String set(int index, String item) {
+    public Integer set(int index, Integer item) {
         validateIndex(index);
-        validateItem(item);
-        storage[index]=item;
+        validateItemInteger(item);
+        storage[index] = item;
         return item;
     }
 
+
     @Override
-    public String remove(String item) {
-        validateItem(item);
-        int index=indexOf(item);
+    public Integer remove(Integer item) {
+        validateItemInteger(item);
+        int index = indexOf(item);
         return remove(index);
     }
 
     @Override
-    public String remove(int index) {
+    public Integer remove(int index) {
         validateIndex(index);
-        String item = storage[index];
-
+        Integer item = storage[index];
 
         if (index == -1) {
             throw new ElementNotFoundException();
         }
 
         if (index != size) {
-            System.arraycopy(storage,index+1,storage,index,size-index);
+            System.arraycopy(storage, index + 1, storage, index, size - index);
         }
         return item;
     }
 
     @Override
-    public boolean contains(String item) {
-        return indexOf(item)!=-1;
+    public boolean contains(Integer item) {
+        return indexOf(item) != -1;
     }
 
     @Override
-    public int indexOf(String item) {
+    public int indexOf(Integer item) {
         for (int i = 0; i < size; i++) {
-            String s = storage[i];
+            Integer s = storage[i];
             if (s.equals((item))) {
                 return i;
             }
@@ -91,9 +88,9 @@ public class StringListImpl implements StringList {
     }
 
     @Override
-    public int lastIndexOf(String item) {
-        for (int i = size-1; i >= 0; i--) {
-            String s = storage[i];
+    public int lastIndexOf(Integer item) {
+        for (int i = size - 1; i >= 0; i--) {
+            Integer s = storage[i];
             if (s.equals((item))) {
                 return i;
             }
@@ -102,15 +99,15 @@ public class StringListImpl implements StringList {
     }
 
     @Override
-    public String get(int index) {
+    public Integer get(int index) {
         validateIndex(index);
 
         return storage[index];
     }
 
     @Override
-    public boolean equals(List<String> otherList) {
-        return Arrays.equals(this.toArray(),otherList.toArray());
+    public boolean equals(List<Integer> otherList) {
+        return Arrays.equals(this.toArray(), otherList.toArray());
     }
 
     @Override
@@ -120,42 +117,43 @@ public class StringListImpl implements StringList {
 
     @Override
     public boolean isEmpty() {
-        return size==0;
+        return size == 0;
     }
 
     @Override
     public void clear() {
         size = 0;
-
-
     }
 
     @Override
-    public String[] toArray() {
-        return Arrays.copyOf(storage,size);
+    public Integer[] toArray() {
+        return Arrays.copyOf(storage, size);
     }
 
-    private void validateItem(String item) {
-        if (item==null) throw new NullItemException();
+    private void validateItemInteger(Integer item) {
+        if (item == null) throw new NullItemException();
     }
-    private void validateSize() {
-        if (size==storage.length)
+
+    private void validateSizeInteger() {
+        if (size == storage.length)
             throw new StorageIsFullException();
     }
+
     private void validateIndex(int index) {
-        if (index<0||index>size)
+        if (index < 0 || index > size)
             throw new InvalidIndexException();
     }
-    private boolean binarySearch(Integer[] arr, Integer item) {
+
+    public boolean binarySearch(Integer[] array, Integer item) {
         int min = 0;
-        int max = arr.length - 1;
+        int max = array.length - 1;
 
         while (min <= max) {
             int mid = (min + max) / 2;
-            if (Objects.equals(item, arr[mid])) {
+            if (Objects.equals(item, array[mid])) {
                 return true;
             }
-            if (item < arr[mid]) {
+            if (item < array[mid]) {
                 max = mid - 1;
             } else {
                 min = mid + 1;
@@ -198,8 +196,6 @@ public class StringListImpl implements StringList {
         arr[indexB] = tmp;
     }
 
-//    public void grow() {
-//        listInteger = Arrays.copyOf(listInteger, size + size / 2);
-//    }
+
 }
 
