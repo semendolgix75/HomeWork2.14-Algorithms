@@ -18,7 +18,7 @@ public class IntegerListImpl implements IntegerList {
 
     @Override
     public Integer add(Integer item) {
-//     validateSizeInteger();
+        growIfNeeded();
         if (storage.length == size) {
             grow();
         }
@@ -29,7 +29,7 @@ public class IntegerListImpl implements IntegerList {
 
     @Override
     public Integer add(int index, Integer item) {
-        validateSizeInteger();
+        growIfNeeded();
         validateItemInteger(item);
         validateIndex(index);
         if (index == size) {
@@ -139,9 +139,9 @@ public class IntegerListImpl implements IntegerList {
         if (item == null) throw new NullItemException();
     }
 
-    private void validateSizeInteger() {
+    private void growIfNeeded() {
         if (size == storage.length)
-            throw new StorageIsFullException();
+            grow();
     }
 
     private void validateIndex(int index) {
@@ -172,6 +172,7 @@ public class IntegerListImpl implements IntegerList {
     }
 
     public void sort(Integer[] arr) {
+
         quickSort(arr, 0, arr.length - 1);
     }
 
@@ -186,7 +187,7 @@ public class IntegerListImpl implements IntegerList {
     private int partition(Integer[] arr, int begin, int end) {
         int pivot = arr[end];
         int i = (begin - 1);
-        for (int j = 0; j < end; j++) {
+        for (int j = begin; j < end; j++) {
             if (arr[j] <= pivot) {
                 i++;
 
@@ -198,10 +199,10 @@ public class IntegerListImpl implements IntegerList {
         return i + 1;
     }
 
-    private static void swapElements(Integer[] arr, int indexA, int indexB) {
-        int tmp = arr[indexA];
-        arr[indexA] = arr[indexB];
-        arr[indexB] = tmp;
+    private static void swapElements(Integer[] arr, int i1, int i2) {
+        int tmp = arr[i1];
+        arr[i1] = arr[i2];
+        arr[i2] = tmp;
     }
 
     //   Пузырьковая сортировка
@@ -273,12 +274,7 @@ public class IntegerListImpl implements IntegerList {
     }
 
     private void grow() {
-        Integer newSize=(int)(storage.length*1.5);
-        Integer[] newArray = new Integer[newSize];
-
-        // Копирование элементов из старого массива в новый
-        System.arraycopy(storage, 0, newArray, 0, storage.length);
-        storage=newArray;
+        storage = Arrays.copyOf(storage, size + size / 2);
 
     }
 
