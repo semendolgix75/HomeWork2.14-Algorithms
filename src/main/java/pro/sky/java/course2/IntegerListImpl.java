@@ -73,7 +73,9 @@ public class IntegerListImpl implements IntegerList {
 
     @Override
     public boolean contains(Integer item) {
-        return indexOf(item) != -1;
+        Integer[] storageCopy = toArray();
+        sort(storageCopy);
+        return binarySearch(storageCopy, item);
     }
 
     @Override
@@ -144,6 +146,9 @@ public class IntegerListImpl implements IntegerList {
             throw new InvalidIndexException();
     }
 
+
+    //    Бинарный поиск
+
     public boolean binarySearch(Integer[] array, Integer item) {
         int min = 0;
         int max = array.length - 1;
@@ -196,6 +201,73 @@ public class IntegerListImpl implements IntegerList {
         arr[indexB] = tmp;
     }
 
+    //   Пузырьковая сортировка
+    public static void sortBubble(Integer[] arr) {
+        for (int i = 0; i < arr.length - 1; i++) {
+            for (int j = 0; j < arr.length - 1 - i; j++) {
+                if (arr[j] > arr[j + 1]) {
+                    swapElements(arr, j, j + 1);
+                }
+            }
+        }
+    }
+
+    //Сортировка выбором
+    public static void sortSelection(Integer[] arr) {
+        for (int i = 0; i < arr.length - 1; i++) {
+            int minElementIndex = i;
+            for (int j = i + 1; j < arr.length; j++) {
+                if (arr[j] < arr[minElementIndex]) {
+                    minElementIndex = j;
+                }
+            }
+            swapElements(arr, i, minElementIndex);
+        }
+    }
+
+    //    Сортировка вставкой
+    public static void sortInsertion(Integer[] arr) {
+        for (int i = 1; i < arr.length; i++) {
+            int temp = arr[i];
+            int j = i;
+            while (j > 0 && arr[j - 1] >= temp) {
+                arr[j] = arr[j - 1];
+                j--;
+            }
+            arr[j] = temp;
+        }
+    }
+
+    //    Поиск
+//Линейный поиск
+    public static boolean contains(int[] arr, int element) {
+        for (int i : arr) {
+            if (i == element) {
+                return true;
+            }
+        }
+        return false;
+    }
+    public static boolean binaryContains(int[] arr, int element) {
+        int min = 0;
+        int max = arr.length - 1;
+
+        while (min <= max) {
+            int mid = (min + max) / 2;
+
+            if (element == arr[mid]) {
+                return true;
+            }
+
+            if (element < arr[mid]) {
+                max = mid - 1;
+            } else {
+                min = mid + 1;
+            }
+        }
+        return false;
+    }
 
 }
+
 
