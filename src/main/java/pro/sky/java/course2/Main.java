@@ -2,28 +2,35 @@ package pro.sky.java.course2;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.Random;
 
 public class Main {
     public static void main(String[] args) {
-        ArrayList arrayList = new ArrayList();
-//        arrayList.setArray(new String[]{"zero"});
+        final int SIZE_ARRAY = 100_000;
+        Integer[] arrTest = new Integer[SIZE_ARRAY];
+        Random random = new Random();
+        for (int i = 0; i < SIZE_ARRAY; i++) {
+            arrTest[i] = random.nextInt(1, 100000);
+        }
+        System.out.println("Размер массива  = "+SIZE_ARRAY);
+        long start = System.currentTimeMillis();
+        IntegerListImpl.sortBubble(arrTest);
+        long finish = System.currentTimeMillis();
+        System.out.println("Пузырьковая сортировка (мс) = " +
+                (finish - start));
 
-        System.out.println(arrayList.add("one")+" size= "+arrayList.size() );
-        System.out.println(arrayList.add("two")+" size= "+arrayList.size() );
-        System.out.println(arrayList.add("three")+" size= "+arrayList.size() );
-        System.out.println(arrayList.add("four")+" size= "+arrayList.size() );
-        System.out.println(arrayList.add(1,"four"));
-        System.out.println(arrayList.add(1,"two"));
-        System.out.println("arrayList.remove(item) = " + arrayList.remove("one"));
-        System.out.println("arrayList.remove(index) = " + arrayList.remove(3));
-        System.out.println("arrayList.contains(item) = " + arrayList.contains("three"));
-        System.out.println("arrayList.indexOf() = " + arrayList.indexOf("three"));
-        System.out.println("arrayList.lastIndexOf() = " + arrayList.lastIndexOf("three"));
-        System.out.println("arrayList.get() = " + arrayList.get(3));
 
-        List<String> list1 = List.of("one", "two", "three");
-        List<String> otherList = List.of("one", "two", "three");
-        System.out.println("list.equals(otherList) = " + list1.equals(otherList));
-        System.out.println("list1.size() = " + list1.size());
+        start = System.currentTimeMillis();
+        IntegerListImpl.sortSelection(arrTest);
+        finish = System.currentTimeMillis();
+        System.out.println("Сортировка выбором (мс) = " +
+                (finish - start));
+
+        start = System.currentTimeMillis();
+        IntegerListImpl.sortInsertion(arrTest);
+        finish = System.currentTimeMillis();
+        System.out.println("Сортировка вставкой (мс) = " +
+                (finish - start));
+
     }
 }

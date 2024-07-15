@@ -2,7 +2,9 @@ package pro.sky.java.course2;
 
 import java.util.List;
 
+
 public interface StringList {
+
 
         // Добавление элемента.
         // Вернуть добавленный элемент в качестве результата выполнения.

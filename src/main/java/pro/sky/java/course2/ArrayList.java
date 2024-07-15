@@ -35,6 +35,14 @@ public class ArrayList implements StringList {
             throw new ErrorNullPointerException("Список не должен добавлять или хранить в себе null");
         }
     }
+
+    public void validateIndex(int index) {
+        if (index > size || index < 0) {
+            throw new ErrorIndexOutOfBoundsException("Index: " + index + ", Size: " + size);
+        }
+    }
+
+
     // Добавление элемента.
     // Вернуть добавленный элемент в качестве результата выполнения.
     @Override
@@ -57,12 +65,9 @@ public class ArrayList implements StringList {
     // в качестве результата выполнения.
     @Override
     public String add(int index, String item) {
-        if (index == size || index < 0) {
-            throw new ErrorIndexOutOfBoundsException("Index: " + index + ", Size: " + size);
-        }
-        if (item == null) {
-            throw new ErrorNullPointerException("Список не должен добавлять или хранить в себе null");
-        }
+
+        validateValue(item);
+        validateIndex(index);
         if (size == array.length) {
             increaseCapacity();
         }
@@ -77,13 +82,10 @@ public class ArrayList implements StringList {
     // Установить элемент на определенную позицию, затерев существующий.
     // Выбросить исключение, если индекс больше фактического количества элементов или выходит за пределы массива.
     @Override
+
     public String set(int index, String item) {
-        if (index > size || index < 0) {
-            throw new ErrorIndexOutOfBoundsException("Index: " + index + ", Size: " + size);
-        }
-        if (item == null) {
-            throw new ErrorNullPointerException("Список не должен добавлять или хранить в себе null");
-        }
+        validateIndex(index);
+        validateValue(item);
 
         if (size == array.length) {
             increaseCapacity();
@@ -97,9 +99,7 @@ public class ArrayList implements StringList {
     @Override
 
     public String remove(String item) {
-        if (item == null) {
-            throw new ErrorNullPointerException("Список не должен добавлять или хранить в себе null");
-        }
+        validateValue(item);
         int numRemove = 0;
         int indexRemove = 0;
         for (int i = 0; i < size; i++) {
@@ -129,9 +129,7 @@ public class ArrayList implements StringList {
     // Вернуть удаленный элемент или исключение, если подобный  элемент отсутствует в списке.
     @Override
     public String remove(int index) {
-        if (index > size || index < 0) {
-            throw new ErrorIndexOutOfBoundsException("Index: " + index + ", Size: " + size);
-        }
+        validateIndex(index);
 
         String result = array[index];
         String[] resultArray = new String[size - 1];
@@ -151,9 +149,7 @@ public class ArrayList implements StringList {
  // Вернуть true/false;
 @Override
 public boolean contains(String item) {
-    if (item == null) {
-        throw new ErrorNullPointerException("Список не должен добавлять или хранить в себе null");
-    }
+    validateValue(item);
     for (int i = 0; i < array.length; i++) {
         if (array[i] == item) return true;
     }
@@ -164,9 +160,7 @@ public boolean contains(String item) {
     // Вернуть индекс элемента или -1 в случае отсутствия.
 @Override
 public int indexOf(String item) {
-    if (item == null) {
-        throw new ErrorNullPointerException("Список не должен добавлять или хранить в себе null");
-    }
+    validateValue(item);
     for (int i = 0; i < array.length; i++) {
         if (array[i] == item) return i;
     }
@@ -177,9 +171,7 @@ public int indexOf(String item) {
     // Вернуть индекс элемента или -1 в случае отсутствия.
 @Override
 public int lastIndexOf(String item) {
-    if (item == null) {
-        throw new ErrorNullPointerException("Список не должен добавлять или хранить в себе null");
-    }
+    validateValue(item);
     for (int i = array.length-1; i >= 0; i--) {
         if (array[i] == item) return i;
     }
@@ -191,9 +183,7 @@ public int lastIndexOf(String item) {
     // Вернуть элемент или исключение, если выходит за рамки фактического  количества элементов.
 @Override
 public String get(int index) {
-    if (index > size || index < 0) {
-        throw new ErrorIndexOutOfBoundsException("Index: " + index + ", Size: " + size);
-    }
+    validateIndex(index);
 
     return array[index];
 }
