@@ -6,7 +6,7 @@ import java.util.Random;
 
 public class Main {
     public static void main(String[] args) {
-        final int SIZE_ARRAY = 100_000;
+        final int SIZE_ARRAY = 1_000;
         Integer[] arrTest = new Integer[SIZE_ARRAY];
         Random random = new Random();
         for (int i = 0; i < SIZE_ARRAY; i++) {

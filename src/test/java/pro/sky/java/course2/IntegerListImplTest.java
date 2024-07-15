@@ -25,7 +25,21 @@ class IntegerListImplTest {
         //then
         assertEquals(expected, actual);
     }
+    @Test
+    void shouldCheckExpansionArray() {
+        //given
+        Integer expected = 5;
+        //when
 
+        integerList.add(1);
+        integerList.add(1);
+        integerList.add(1);
+        integerList.add(1);
+        integerList.add(1);
+        Integer actual=integerList.size();
+        //then
+        assertEquals(expected, actual);
+    }
 
     @Test
     void shouldItemBinarySearch() {
@@ -89,5 +103,6 @@ class IntegerListImplTest {
 
     @Test
     void grow() {
+
     }
 }

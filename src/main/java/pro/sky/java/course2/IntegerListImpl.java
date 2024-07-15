@@ -8,9 +8,9 @@ public class IntegerListImpl implements IntegerList {
     private Integer[] storage;
     private int size;
 
-    public IntegerListImpl() {
-        storage = new Integer[10];
-    }
+//    public IntegerListImpl() {
+//        storage = new Integer[10];
+//    }
 
     public IntegerListImpl(int size) {
         storage = new Integer[size];
@@ -18,7 +18,10 @@ public class IntegerListImpl implements IntegerList {
 
     @Override
     public Integer add(Integer item) {
-        validateSizeInteger();
+//     validateSizeInteger();
+        if (storage.length == size) {
+            grow();
+        }
         validateItemInteger(item);
         storage[size++] = item;
         return item;
@@ -248,6 +251,7 @@ public class IntegerListImpl implements IntegerList {
         }
         return false;
     }
+
     public static boolean binaryContains(int[] arr, int element) {
         int min = 0;
         int max = arr.length - 1;
@@ -266,6 +270,16 @@ public class IntegerListImpl implements IntegerList {
             }
         }
         return false;
+    }
+
+    private void grow() {
+        Integer newSize=(int)(storage.length*1.5);
+        Integer[] newArray = new Integer[newSize];
+
+        // Копирование элементов из старого массива в новый
+        System.arraycopy(storage, 0, newArray, 0, storage.length);
+        storage=newArray;
+
     }
 
 }
